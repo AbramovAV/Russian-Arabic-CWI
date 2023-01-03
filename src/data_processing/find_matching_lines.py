@@ -37,6 +37,7 @@ def find_matching_verse_ids(dataset:pd.DataFrame, bible_verses:pd.DataFrame) -> 
         Pandas Series with corresponding verse ids.
     """
     sentences = dataset.loc[:, "sentence"]
+    bible_verses = bible_verses.drop_duplicates("verse", inplace=False)
     bible_verses = bible_verses.set_index("verse", inplace=False)
     verse_ids = bible_verses.loc[sentences].reset_index()["id"]
     return verse_ids
@@ -73,6 +74,8 @@ def build_parallel_corpus(ru_verses:pd.DataFrame, ar_verses:pd.DataFrame, verse_
     """
     ru_matching_verses = find_matching_verses(ru_verses, verse_ids)
     ar_matching_verses = find_matching_verses(ar_verses, verse_ids)
+    assert len(ru_matching_verses) == len(ar_matching_verses) == len(dataset["token"]), \
+        "Number of found verses doesn't match number of annotated words, check correctness of data"
     parallel_corpus = {"Russian": ru_matching_verses,
                        "Arabic": ar_matching_verses,
                        "Target": dataset["token"]
