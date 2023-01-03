@@ -1,3 +1,13 @@
+"""
+This module is used as a standalone script that allows
+to automatically match and replace Bible verses from 
+original parallel corpus with edited verses from 
+Russian word complexity corpus. Also helps to manually check
+precense of unmatched verses.
+Relies on the library with fuzzy regularu expressions:
+https://github.com/mrabarnett/mrab-regex
+"""
+
 from xml.etree import ElementTree as ET
 import pandas as pd
 import regex

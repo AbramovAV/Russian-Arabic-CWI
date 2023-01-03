@@ -1,8 +1,24 @@
+"""
+This module contains functionality to load Bible parallel corpora
+from XML files and check correctness of parsing.
+"""
+
 from xml.etree import ElementTree as ET
 import re
 import pandas as pd
 
 def load_xml_bible(xml_path:str) -> pd.DataFrame:
+    """
+    Loads XML file with a specific part of a parallel corpus of Bible
+    and construct a DataFrame with 2 columns: verses and corresponding ids.
+
+    Args:
+        xml_path: path to XML file with Bible.
+
+    Returns:
+        Pandas DataFrame with 2 columns, where each row represents
+        a pair "verse - id".
+    """
     tree = ET.parse(xml_path)
     bible_verses = {"id":[], "verse":[]}
     bible = tree.getroot().find("text").find("body")
